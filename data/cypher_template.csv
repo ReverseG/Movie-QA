@@ -1,0 +1,9 @@
+﻿qt,cypher
+0,match (a:Actor{name:'nr'})-->(m:Movie) return m.name as name
+1,match (a:Actor)-->(m:Movie{name:'nm'}) return a.name as name
+2,match (m:Movie{name:'nm'})-->(g:Genre) return g.name as name
+3,match (m:Movie{name:'nm'}) return m.rating as name
+4,match (a:Actor{name:'nr'})-->(m:Movie)-->(g:Genre) return g.name as name
+5,match (m:Movie{name:'nm'}) return m.date as name
+6,match (:Actor{name:'nr'})-->(m:Movie)<--(:Actor{name:'nr'}) return m.name as name
+7,match (:Actor{name:'nr'})-->(m:Movie) return count(m) as name

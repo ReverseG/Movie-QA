@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电影对话系统</title>
+</head>
+<body>
+<div>
+    <form name="form">
+        <span>Question：</span><input id="text" class="textbox" type="text"/>
+        <input class="button" type="button" value="Ask" onclick="goSearch()"/>
+        <span>Answer：</span><input id="answer" class="textbox" type="text"/>
+    </form>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script type="text/javascript">
+    function goSearch() {
+        var str = document.getElementById("text").value;
+        $.ajax
+        ({
+            url: "/search",
+            dataType: "json",
+            type: "get",
+            data: {
+                wd: str
+            },
+            success: function (res) {
+                document.getElementById("answer").value = res["data"]
+
+            },
+            error: function () {
+                alert('failed!');
+            }
+        });
+    }
+</script>
+
+<style type="text/css">
+    .button {
+        width: 100px;
+        height: 29px;
+        font-size: 16px;
+        color: white;
+        background-color: black;
+        padding: 0;
+        vertical-align: top;
+        border: 0;
+    }
+
+    .textbox {
+        height: 25px;
+        padding: 0;
+        vertical-align: top;
+    }
+
+    span {
+        font-size: 16px;
+        height: 29px;
+        line-height: 29px;
+    }
+</style>
