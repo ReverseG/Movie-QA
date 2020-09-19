@@ -1,31 +1,58 @@
+import jieba
+import jieba.posseg as psg
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
 
-def create_dic():
-    person_csv = pd.read_csv('data/person.csv')
-    person_csv['name'] = person_csv.apply(lambda x: x['name'].replace('"', ''), axis=1)
-    person_csv['freq'] = '10'
-    person_csv['prop'] = 'nr'
-    person = person_csv[['name', 'freq', 'prop']]
+class QuestionPrediction:
+    """
+    jieba加载自定义词典进行分词
+    再通过TfidfVectorizer向量化训练贝叶斯模型
+    """
+    def __init__(self):
+        dict_file, template_file  = './data/dictionary.csv', './data/question.csv'
+        jieba.load_userdict(dict_file)
+        psg
+        train_x, train_y = self.read_data(template_file)
+        self.tv, self.model = self.train(train_x, train_y)
 
-    movie_csv = pd.read_csv('data/movie.csv')
-    movie_csv['freq'] = '10'
-    movie_csv['prop'] = 'nm'
-    movie = movie_csv[['title', 'freq', 'prop']]
-    movie = movie.rename(columns={'title': 'name'})
+    def read_data(self, path):
+        data = pd.read_csv(path)
+        train_x = list()
+        for s in data['question']:
+            segs = [x.word for x in psg.lcut(s)]
+            train_x.append(' '.join(segs))
+        train_y = data['label'].tolist()
+        return train_x, train_y
 
-    gener_csv = pd.read_csv('data/genre.csv')
-    gener_csv['freq'] = 10
-    gener_csv['prop'] = 'ng'
-    gener = gener_csv[['gname', 'freq', 'prop']]
-    gener = gener.rename(columns={'gname': 'name'})
+    def train(self, train_x, train_y):
+        tv = TfidfVectorizer()
+        feature_x = tv.fit_transform(train_x).toarray()
+        label_y = train_y
+        model = MultinomialNB(alpha=0.01)
+        model.fit(feature_x, label_y)
+        return tv, model
 
-    dic = pd.concat([person, gener, movie])
-    dic = dic.reset_index(drop=True)
-    dic.to_csv('./data/dictionary.csv', header=False, index=False, sep=" ")
+    def predict(self, question):
+        filling_segs = []
+        feature_x = []
+        for seg in psg.lcut(question):
+            if seg.flag in ['nr', 'nm', 'ng']:
+                feature_x.append(seg.flag)
+                filling_segs.append(seg)
+            else:
+                feature_x.append(seg.word)
+        feature_x = ' '.join(feature_x)
+        print(feature_x)
+        feature_x = self.tv.transform([feature_x]).toarray()
+        label = self.model.predict(feature_x)
+        return label[0], filling_segs
 
 
 if __name__ == '__main__':
-    create_dic()
-    s = '"Chen Dao-Ming"'
-    print(s.replace('"', ''))
+    model = QuestionPrediction()
+    label = model.predict('周润发参演的电影有哪些？')
+    print(label)
+
+

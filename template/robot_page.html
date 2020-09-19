@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+<meta charset="UTF-8">
+<title>对话机器人 - OwnThink</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="聊天机器人,对话机器人,聊天机器人api,智能机器人,微信机器人,思知机器人,知识图谱,机器人api,认知机器人,API,AI,人工智能,ownthink">
+<meta name="description" content="思知机器人、知识图谱、聊天机器人、微信机器人、认知机器人、机器人api、聊天机器人api。思知(OwnThink)是一个理想国，在人工智能方面不断努力着，希望有一天能够出现独立思考的人工智能机器人。项目开放了对话机器人、知识图谱、语义理解、语音识别、语音合成、自然语言处理工具。今后将开放世界上最大的知识图谱社区。人工智能机器人采用了基于知识图谱的语义感知与理解，让认知大脑成为可能。">
+<link rel="icon" href="/static/favicon.ico">
+<link rel="stylesheet" href="/static/css/styles.css">
+<link rel="stylesheet" href="/static/css/robot.css">
+</head>
+<body>
+<header>
+<div class="container">
+<a href="/">
+<div class="logo"></div>
+</a>
+<div class="menus">
+<a href="/">首页</a>
+<a href="/knowledge.html">知识图谱</a>
+<a class="active" href="/robot.html">对话机器人</a>
+</div>
+<div class="menus float-right">
+<a target="_blank" href="https://www.ownthink.com/docs/bot/">使用文档</a>
+<a target="_blank" href="https://console.ownthink.com/dashboard">机器人管理中心</a>
+</div>
+</div>
+</header>
+<div class="main bg3">
+<div class="container">
+<div id="panel" class="robot-wrap">
+<iframe align="middle" class="robot" frameborder="0" src="robot/"></iframe>
+</div>
+</div>
+</div>
+<script>
+        window.onresize = window.onload = function () {
+            try {
+                var panel = document.getElementById('panel');
+                if (document.documentElement.clientWidth < 768) {
+                    var h = document.documentElement.clientHeight - 50;
+                    panel.style.height = h + 'px';
+                }else {
+                    panel.style.removeProperty('height');
+                }
+            } catch (e) {
+
+            }
+        }
+    </script>
+<div class="footer">
+<div class="container copyright">
+<p class="txt">Copyright (C) 2015-2020 OwnThink QQ群：956936481 作者微信：MrYener 项目合作：机器人、知识图谱、信息抽取、各种NLP定制开发</p>
+<p class="txt">
+<a href="http://www.beian.miit.gov.cn" target="_blank">闽ICP备15005232号</a>
+</p>
+</div>
+</div>
+</body>
+</html>
