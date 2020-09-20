@@ -17,19 +17,19 @@ def question():
     return render_template('search.html')
 
 
-@app.route("/knowledge")
-def knowledge():
-    return render_template('knowledge.html')
-
-
-@app.route("/robot_page")
-def robot_page():
-    return render_template('robot_page.html')
-
-
-@app.route("/robot")
-def robot():
-    return render_template('robot.html')
+# @app.route("/knowledge")
+# def knowledge():
+#     return render_template('knowledge.html')
+#
+#
+# @app.route("/robot_page")
+# def robot_page():
+#     return render_template('robot_page.html')
+#
+#
+# @app.route("/robot")
+# def robot():
+#     return render_template('robot.html')
 
 
 @app.route("/index")
